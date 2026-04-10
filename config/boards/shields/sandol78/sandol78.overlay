@@ -1,0 +1,127 @@
+/ {
+    chosen {
+        zmk,kscan = &kscan0;
+        zmk,matrix-transform = &default_transform;
+    }
+
+    default_transform: matrix_transform {
+        compatible = "zmk,matrix-transform";
+        columns = <14>;
+        rows = <6>;
+        map = <
+            RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5) RC(0,6) RC(0,7) RC(0,8) RC(0,9) RC(0,10) RC(0,11) RC(0,12) RC(0,13)
+            RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5) RC(1,6) RC(1,7) RC(1,8) RC(1,9) RC(1,10) RC(1,11) RC(1,12) RC(1,13)
+            RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5) RC(2,6) RC(2,7) RC(2,8) RC(2,9) RC(2,10) RC(2,11) RC(2,12) RC(2,13)
+            RC(3,0) RC(3,1) RC(3,2) RC(3,3) RC(3,4) RC(3,5) RC(3,6) RC(3,7) RC(3,8) RC(3,9) RC(3,10) RC(3,11) RC(3,12) RC(3,13)
+            RC(4,0) RC(4,1) RC(4,2) RC(4,3) RC(4,4) RC(4,5) RC(4,6) RC(4,7) RC(4,8) RC(4,9) RC(4,10) RC(4,11) RC(4,12) RC(4,13)
+            RC(5,0) RC(5,1) RC(5,2) RC(5,3) RC(5,4) RC(5,5) RC(5,6) RC(5,7) RC(5,8) RC(5,9) RC(5,10) RC(5,11) RC(5,12) RC(5,13)
+        >;
+    };
+
+    kscan0: kscan {
+        compatible = "zmk,kscan-matrix";
+        diode-direction = "col2row";
+        
+        row-gpios
+            = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* Row 0 */
+            , <&shifter 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 1: SR1 QB */
+            , <&shifter 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 2: SR1 QC */
+            , <&shifter 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 3: SR1 QD */
+            , <&shifter 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 4: SR1 QE */
+            , <&shifter 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 5: SR1 QF */
+            ;
+
+        col-gpios
+            = <&gpio0 2 GPIO_ACTIVE_HIGH>   /* Col 0 */
+            , <&gpio1 15 GPIO_ACTIVE_HIGH>  /* Col 1 */
+            , <&gpio1 13 GPIO_ACTIVE_HIGH>  /* Col 2 */
+            , <&gpio1 11 GPIO_ACTIVE_HIGH>  /* Col 3 */
+            , <&shifter 0 GPIO_ACTIVE_HIGH>  /* Col 4: SR1 QA */
+            , <&gpio0 9 GPIO_ACTIVE_HIGH>   /* Col 5 */
+            , <&shifter 8 GPIO_ACTIVE_HIGH>  /* Col 6: SR2 QA */
+            , <&shifter 6 GPIO_ACTIVE_HIGH>  /* Col 7: SR1 QG */
+            , <&shifter 9 GPIO_ACTIVE_HIGH>  /* Col 8: SR2 QB */
+            , <&shifter 10 GPIO_ACTIVE_HIGH> /* Col 9: SR2 QC */
+            , <&shifter 11 GPIO_ACTIVE_HIGH> /* Col 10: SR2 QD */
+            , <&shifter 12 GPIO_ACTIVE_HIGH> /* Col 11: SR2 QE */
+            , <&shifter 13 GPIO_ACTIVE_HIGH> /* Col 12: SR2 QF */
+            , <&shifter 14 GPIO_ACTIVE_HIGH> /* Col 13: SR2 QG */
+            ;
+    };
+
+    encoder: encoder {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio0 29 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        b-gpios = <&gpio0 31 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        steps = <80>;
+        status = "okay";
+    };
+
+    pwm_leds {
+        compatible = "pwm-leds";
+        caps_lock_led: led_pwm {
+            pwms = <&pwm0 0 PWM_MSEC(10) PWM_POLARITY_NORMAL>;
+        };
+    };
+
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&encoder>;
+        triggers-per-rotation = <20>;
+    };
+};
+
+&spi0 {
+    status = "okay";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio0 24 GPIO_ACTIVE_LOW>;
+
+    shifter: gpio_595@0 {
+        compatible = "zmk,gpio-595";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        gpio-controller;
+        #gpio-cells = <2>;
+        ngpios = <16>;
+    };
+};
+
+&pinctrl {
+    spi0_default: spi0_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 17)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 22)>;
+        };
+    };
+
+    spi0_sleep: spi0_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 17)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 22)>;
+            low-power-enable;
+        };
+    };
+
+    pwm0_default: pwm0_default {
+        group1 {
+            psels = <NRF_PSEL(PWM0_CH0, 0, 11)>;
+        };
+    };
+
+    pwm0_sleep: pwm0_sleep {
+        group1 {
+            psels = <NRF_PSEL(PWM0_CH0, 0, 11)>;
+            low-power-enable;
+        };
+    };
+};
+
+&pwm0 {
+    status = "okay";
+    pinctrl-0 = <&pwm0_default>;
+    pinctrl-1 = <&pwm0_sleep>;
+    pinctrl-names = "default", "sleep";
+    ch0-inverted;
+};
