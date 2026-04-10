@@ -87,8 +87,8 @@
     indicator_leds {
         compatible = "zmk,indicator-leds";
         caps_lock_indicator: caps_lock_indicator {
-            indicator-led = <&caps_lock_led>;
-            indicator-active-bits = <HID_USAGE_LED_CAPS_LOCK>;
+            indicator = <HID_INDICATOR_CAPS_LOCK>;
+            leds = <&caps_lock_led>;
         };
     };
 
