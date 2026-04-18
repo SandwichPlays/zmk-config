@@ -1,0 +1,18 @@
+if SHIELD_SANDOL78
+
+config ZMK_KEYBOARD_NAME
+    default "SandoL78"
+
+config EC11
+    default y
+
+config EC11_TRIGGER_GLOBAL_THREAD
+    default y
+
+config PWM
+    default y
+
+config SPI
+    default y
+
+endif
