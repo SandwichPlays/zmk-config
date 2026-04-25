@@ -24,3 +24,6 @@ include:
     shield: sandol78
     snippet: studio-rpc-usb-uart
     cmake-args: -DCONFIG_ZMK_STUDIO=y
+
+  - board: nice_nano//zmk
+    shield: settings_reset
