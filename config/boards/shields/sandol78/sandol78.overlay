@@ -83,28 +83,28 @@
         
         row-gpios
             = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>  /* Row 0 */
-            , <&shifter 1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 1: SR1 QB */
-            , <&shifter 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 2: SR1 QC */
-            , <&shifter 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 3: SR1 QD */
-            , <&shifter 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 4: SR1 QE */
-            , <&shifter 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 5: SR1 QF */
+            , <&gpio0 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 1 */
+            , <&gpio1 15 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 2 */
+            , <&gpio1 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 3 */
+            , <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 4 */
+            , <&gpio1 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)> /* Row 5 */
             ;
 
         col-gpios
-            = <&gpio0 2 GPIO_ACTIVE_HIGH>   /* Col 0 */
-            , <&gpio1 15 GPIO_ACTIVE_HIGH>  /* Col 1 */
-            , <&gpio1 13 GPIO_ACTIVE_HIGH>  /* Col 2 */
-            , <&gpio1 11 GPIO_ACTIVE_HIGH>  /* Col 3 */
-            , <&shifter 0 GPIO_ACTIVE_HIGH>  /* Col 4: SR1 QA */
-            , <&gpio0 9 GPIO_ACTIVE_HIGH>   /* Col 5 */
-            , <&shifter 8 GPIO_ACTIVE_HIGH>  /* Col 6: SR2 QA */
-            , <&shifter 6 GPIO_ACTIVE_HIGH>  /* Col 7: SR1 QG */
-            , <&shifter 9 GPIO_ACTIVE_HIGH>  /* Col 8: SR2 QB */
-            , <&shifter 10 GPIO_ACTIVE_HIGH> /* Col 9: SR2 QC */
-            , <&shifter 11 GPIO_ACTIVE_HIGH> /* Col 10: SR2 QD */
-            , <&shifter 12 GPIO_ACTIVE_HIGH> /* Col 11: SR2 QE */
-            , <&shifter 13 GPIO_ACTIVE_HIGH> /* Col 12: SR2 QF */
-            , <&shifter 14 GPIO_ACTIVE_HIGH> /* Col 13: SR2 QG */
+            = <&shifter 1 GPIO_ACTIVE_HIGH>   /* Col 0 */
+            , <&shifter 2 GPIO_ACTIVE_HIGH>  /* Col 1 */
+            , <&shifter 3 GPIO_ACTIVE_HIGH>  /* Col 2 */
+            , <&shifter 4 GPIO_ACTIVE_HIGH>  /* Col 3 */
+            , <&shifter 0 GPIO_ACTIVE_HIGH>  /* Col 4 */
+            , <&shifter 5 GPIO_ACTIVE_HIGH>   /* Col 5 */
+            , <&shifter 8 GPIO_ACTIVE_HIGH>  /* Col 6 */
+            , <&shifter 6 GPIO_ACTIVE_HIGH>  /* Col 7 */
+            , <&shifter 9 GPIO_ACTIVE_HIGH>  /* Col 8 */
+            , <&shifter 10 GPIO_ACTIVE_HIGH> /* Col 9 */
+            , <&shifter 11 GPIO_ACTIVE_HIGH> /* Col 10 */
+            , <&shifter 12 GPIO_ACTIVE_HIGH> /* Col 11 */
+            , <&shifter 13 GPIO_ACTIVE_HIGH> /* Col 12 */
+            , <&shifter 14 GPIO_ACTIVE_HIGH> /* Col 13 */
             ;
     };
 
